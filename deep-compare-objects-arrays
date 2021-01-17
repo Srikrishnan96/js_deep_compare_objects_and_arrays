@@ -1,0 +1,64 @@
+function removeSpaceAndLineBreak(str) {
+    return str.split("").filter(function(char) {
+        return !(char === " " || char === "\n");
+    }).join("");
+}
+
+function compareFunctions(func1, func2) {
+    const func1String = func1.toString();
+    const func2String = func2.toString();
+    const func1StringSpaceAndLineBreakFiltered = removeSpaceAndLineBreak(func1String);
+    const func2StringSpaceAndLineBreakFiltered = removeSpaceAndLineBreak(func2String);
+
+    return func1StringSpaceAndLineBreakFiltered === func2StringSpaceAndLineBreakFiltered;
+}
+
+function compareArrays(arr1, arr2) {
+    if(arr1.length != arr2.length) return false;
+    for(let i = 0; i < arr1.length; i++) {
+        if(arr1[i] === arr2[i]) continue;
+        if(arr1[i] instanceof Array && arr2[i] instanceof Array) {
+            if(compareArrays(arr1[i], arr2[i])) continue;
+            return false;
+        }
+        if(arr1[i] instanceof Function && arr2[i] instanceof Function) {
+            if(compareFunctions(arr1[i], arr2[i])) continue;
+            return false;
+        }
+        if(Object.prototype.isPrototypeOf(arr1[i]) && Object.prototype.isPrototypeOf(arr2[i])) {
+            if(compareObjects(arr1[i], arr2[i])) continue;
+            return false;
+        }
+        return false;
+    }
+    return true;
+}
+function compareObjects(obj1, obj2) {
+    var keysOfObj1 = Object.keys(obj1);
+
+    for(let i = 0; i < keysOfObj1.length; i++) {
+        let key = keysOfObj1[i];
+        if(obj1[key] === obj2[key]) continue;
+        if(obj1[key] instanceof Array && obj2[key] instanceof Array) {
+            if(compareArrays(obj1[key], obj2[key])) continue;
+            return false;
+        }
+        if(obj1[key] instanceof Function && obj2[key] instanceof Function) {
+            if(compareFunctions(obj1[key], obj2[key])) continue;
+            return false;
+        }
+        if(Object.prototype.isPrototypeOf(obj1[key]) && Object.prototype.isPrototypeOf(obj2[key])) {
+            if(compareObjects(obj1[key], obj2[key])) continue;
+            return false;
+        }
+        return false;
+    }
+    return true;
+}
+
+function deepCompareObjectOrArray(item1, item2) {
+    if(item1 instanceof Array && item2 instanceof Array) return compareArrays(item1, item2);
+    const isPrototypeOf = Object.prototype.isPrototypeOf;
+    if(Object.prototype.isPrototypeOf(item1) && Object.prototype.isPrototypeOf(item2)) return compareObjects(item1, item2);
+    return false;
+}
