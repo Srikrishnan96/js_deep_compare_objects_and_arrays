@@ -5,10 +5,8 @@ function removeSpaceAndLineBreak(str) {
 }
 
 function compareFunctions(func1, func2) {
-    const func1String = func1.toString();
-    const func2String = func2.toString();
-    const func1StringSpaceAndLineBreakFiltered = removeSpaceAndLineBreak(func1String);
-    const func2StringSpaceAndLineBreakFiltered = removeSpaceAndLineBreak(func2String);
+    const func1StringSpaceAndLineBreakFiltered = removeSpaceAndLineBreak(func1.toString());
+    const func2StringSpaceAndLineBreakFiltered = removeSpaceAndLineBreak(func2.toString());
 
     return func1StringSpaceAndLineBreakFiltered === func2StringSpaceAndLineBreakFiltered;
 }
