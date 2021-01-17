@@ -56,7 +56,6 @@ function compareObjects(obj1, obj2) {
 
 function deepCompareObjectOrArray(item1, item2) {
     if(item1 instanceof Array && item2 instanceof Array) return compareArrays(item1, item2);
-    const isPrototypeOf = Object.prototype.isPrototypeOf;
     if(Object.prototype.isPrototypeOf(item1) && Object.prototype.isPrototypeOf(item2)) return compareObjects(item1, item2);
     return false;
 }
